@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { readEnv } from "@/lib/server/env";
 
 export default function HomePage() {
+  const inferenceBackend = readEnv("INFERENCE_BACKEND", "mock");
+
   return (
     <main className="container">
       <section className="hero-shell">
@@ -20,7 +23,7 @@ export default function HomePage() {
             <span className="badge">Public-safe</span>
             <span className="badge">Next.js on Vercel</span>
             <span className="badge">
-              Runtime: {process.env.INFERENCE_BACKEND === "hf_space" ? "live + mock fallback" : "mock-safe"}
+              Runtime: {inferenceBackend === "hf_space" ? "live + mock fallback" : "mock-safe"}
             </span>
           </div>
         </div>

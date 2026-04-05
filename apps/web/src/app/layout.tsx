@@ -2,6 +2,7 @@ import "./globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { readEnv } from "@/lib/server/env";
 
 export const metadata: Metadata = {
   title: "Meter Anomaly Detection Platform",
@@ -9,12 +10,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const appName = readEnv("NEXT_PUBLIC_APP_NAME", "Meter Anomaly Detection Platform");
+
   return (
     <html lang="en">
       <body>
         <nav className="nav">
           <Link className="brand" href="/">
-            {process.env.NEXT_PUBLIC_APP_NAME || "Meter Anomaly Detection Platform"}
+            {appName}
           </Link>
           <div className="nav-links">
             <Link href="/">Overview</Link>
