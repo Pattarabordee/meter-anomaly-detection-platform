@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { createMockInferenceResult, normalizeSpaceResult, validateCsvText } from "@/lib/server/csv";
+import { readBooleanEnv, readEnv } from "@/lib/server/env";
 import { callHuggingFaceSpace } from "@/lib/server/hf-space";
 
 export const runtime = "nodejs";
@@ -20,7 +21,7 @@ function jsonError(status: number, code: string, message: string, details?: unkn
 }
 
 function getMaxUploadBytes() {
-  const maxUploadMb = Number(process.env.MAX_UPLOAD_MB || "10");
+  const maxUploadMb = Number(readEnv("MAX_UPLOAD_MB", "10"));
   return maxUploadMb * 1024 * 1024;
 }
 
@@ -46,17 +47,17 @@ export async function POST(request: Request) {
   }
 
   const jobId = `job_${randomUUID()}`;
-  const backend = process.env.INFERENCE_BACKEND || "mock";
+  const backend = readEnv("INFERENCE_BACKEND", "mock");
   const warnings: string[] = [];
-  const mockFallbackEnabled = (process.env.ENABLE_MOCK_FALLBACK || "true").toLowerCase() !== "false";
+  const mockFallbackEnabled = readBooleanEnv("ENABLE_MOCK_FALLBACK", true);
 
   try {
     if (backend === "hf_space") {
       const spaceResult = await callHuggingFaceSpace(fileBuffer, file.name, {
-        apiName: process.env.HF_API_NAME || "",
-        spaceId: process.env.HF_SPACE_ID || "Pattarabordee/pea-ne1-meter-detection",
-        token: process.env.HF_AUTH_TOKEN || "",
-        useAuth: (process.env.HF_USE_AUTH || "false").toLowerCase() === "true",
+        apiName: readEnv("HF_API_NAME", ""),
+        spaceId: readEnv("HF_SPACE_ID", "Pattarabordee/pea-ne1-meter-detection"),
+        token: readEnv("HF_AUTH_TOKEN", ""),
+        useAuth: readBooleanEnv("HF_USE_AUTH", false),
       });
 
       const normalized = normalizeSpaceResult(spaceResult.response, fileText, jobId, "hf_space");
