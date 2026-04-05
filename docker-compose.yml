@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    ports: ["8080:8080"]
+    environment:
+      PORT: 8080
+      INFERENCE_BACKEND: mock
+      REQUEST_TIMEOUT_SECONDS: 30
+      MAX_UPLOAD_MB: 10
+      PYTHON_BRIDGE_PATH: /app/apps/model-adapter/scripts/hf_predict.py
+      PYTHON_EXECUTABLE: python3
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+    ports: ["3000:3000"]
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8080
+      NEXT_PUBLIC_APP_NAME: PEA NTL Detection
+      NEXT_PUBLIC_RUNTIME_MODE: mock
+    depends_on: [api]

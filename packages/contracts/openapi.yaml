@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: PEA NTL API
+  version: 0.2.0
+paths:
+  /api/v1/health:
+    get:
+      summary: Health check
+  /api/v1/runtime:
+    get:
+      summary: Inspect backend mode
+  /api/v1/jobs:
+    post:
+      summary: Upload CSV and run inference
+  /api/v1/jobs/{jobID}:
+    get:
+      summary: Get job status
+  /api/v1/jobs/{jobID}/result:
+    get:
+      summary: Get prediction result
+  /api/v1/jobs/{jobID}/download:
+    get:
+      summary: Download processed CSV
