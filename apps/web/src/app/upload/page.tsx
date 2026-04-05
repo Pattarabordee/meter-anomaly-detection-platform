@@ -57,11 +57,17 @@ export default function UploadPage() {
       <section className="grid grid-2">
         <article className="card emphasis-card">
           <div className="panel-label">Input requirements</div>
+          <h2 className="section-title">Prepare a clean demo dataset.</h2>
           <ul className="bullet-list">
             <li>First column must be <code>meter_id</code></li>
             <li>Remaining columns should be numeric monthly usage values</li>
             <li>Do not upload real operational or customer data</li>
           </ul>
+          <div className="step-list">
+            <div><span>1</span>Download the sample CSV or prepare a synthetic file.</div>
+            <div><span>2</span>Upload it to trigger secure server-side inference.</div>
+            <div><span>3</span>Review KPIs, reasons, and downloadable scored output.</div>
+          </div>
           <div className="actions">
             <a className="button secondary" href="/sample_input.csv" download>
               Download Sample CSV
@@ -74,10 +80,12 @@ export default function UploadPage() {
 
         <article className="card upload-card">
           <div className="panel-label">Run inference</div>
+          <h2 className="section-title">Launch a scoring session.</h2>
           <label className="upload-dropzone">
             <input type="file" accept=".csv,text/csv" onChange={onFileChange} />
             <span className="upload-title">Choose CSV file</span>
             <span className="muted">{fileLabel}</span>
+            <span className="upload-hint">Supports public-safe CSV only. Live HF mode stays behind the server route.</span>
           </label>
 
           {error ? <div className="alert error">{error}</div> : null}

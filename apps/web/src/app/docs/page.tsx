@@ -11,8 +11,19 @@ export default function DocsPage() {
         </p>
       </section>
 
+      <section className="docs-banner">
+        <div>
+          <span className="panel-label">Release posture</span>
+          <h2 className="section-title">Minimal architecture, stronger production story.</h2>
+        </div>
+        <p className="muted">
+          The platform is optimized for portfolio review and committee demonstrations while preserving a
+          secure boundary between the browser and the inference backend.
+        </p>
+      </section>
+
       <div className="grid grid-2">
-        <article className="card">
+        <article className="card editorial-card">
           <div className="panel-label">Request flow</div>
           <pre>{`Browser
   -> Next.js page/app router
@@ -20,7 +31,7 @@ export default function DocsPage() {
   -> Hugging Face Space (server-side only) or mock scorer
   -> Normalized JSON + downloadable CSV`}</pre>
         </article>
-        <article className="card">
+        <article className="card editorial-card">
           <div className="panel-label">Key environment variables</div>
           <pre>{`INFERENCE_BACKEND=mock | hf_space
 HF_SPACE_ID=Pattarabordee/pea-ne1-meter-detection
@@ -32,7 +43,7 @@ ENABLE_MOCK_FALLBACK=true`}</pre>
       </div>
 
       <div className="grid grid-2">
-        <article className="card">
+        <article className="card feature-card">
           <div className="panel-label">Why this is Vercel-ready</div>
           <ul className="bullet-list">
             <li>No dependency on a separate Go service for the main demo path</li>
@@ -40,7 +51,7 @@ ENABLE_MOCK_FALLBACK=true`}</pre>
             <li>Next.js route handlers are the only public API surface needed for the demo</li>
           </ul>
         </article>
-        <article className="card">
+        <article className="card feature-card accent-card">
           <div className="panel-label">Why this is public-safe</div>
           <ul className="bullet-list">
             <li>Uses synthetic sample input only</li>

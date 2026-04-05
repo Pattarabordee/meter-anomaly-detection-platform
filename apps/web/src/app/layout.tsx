@@ -17,7 +17,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <nav className="nav">
           <Link className="brand" href="/">
-            {appName}
+            <span className="brand-mark">MA</span>
+            <span className="brand-copy">
+              <strong>{appName}</strong>
+              <span>Utility risk intelligence</span>
+            </span>
           </Link>
           <div className="nav-links">
             <Link href="/">Overview</Link>

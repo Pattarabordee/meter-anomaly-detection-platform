@@ -53,12 +53,16 @@ export default function JobResultClient({ jobId }: { jobId: string }) {
         </p>
       </section>
 
-      <div className="actions">
-        <span className="badge">Backend: {job.result.backend || "unknown"}</span>
-        {job.result.backend_api_name ? <span className="badge">API: {job.result.backend_api_name}</span> : null}
-        <button onClick={() => downloadCsv(job)}>Download scored CSV</button>
-        <Link className="button secondary" href="/upload">Run another file</Link>
-      </div>
+      <section className="result-toolbar">
+        <div className="actions">
+          <span className="badge">Backend: {job.result.backend || "unknown"}</span>
+          {job.result.backend_api_name ? <span className="badge">API: {job.result.backend_api_name}</span> : null}
+        </div>
+        <div className="actions">
+          <button onClick={() => downloadCsv(job)}>Download scored CSV</button>
+          <Link className="button secondary" href="/upload">Run another file</Link>
+        </div>
+      </section>
 
       {job.warnings.length ? (
         <div className="warn">
@@ -69,24 +73,38 @@ export default function JobResultClient({ jobId }: { jobId: string }) {
       ) : null}
 
       <section className="grid grid-3 stats-grid">
-        <article className="card stat-card">
+        <article className="card stat-card surface-strong">
           <div className="panel-label">Rows processed</div>
           <div className="stat-value">{job.result.summary.rows_total}</div>
         </article>
-        <article className="card stat-card">
+        <article className="card stat-card surface-strong">
           <div className="panel-label">Predicted abnormal</div>
           <div className="stat-value">{job.result.summary.predicted_abnormal}</div>
         </article>
-        <article className="card stat-card">
+        <article className="card stat-card surface-strong">
           <div className="panel-label">High risk</div>
           <div className="stat-value">{job.result.summary.high_risk}</div>
         </article>
       </section>
 
-      <div className="alert">
-        Use <code>model_score</code> as a prioritization signal for field inspection, not as proof of
-        wrongdoing.
-      </div>
+      <section className="grid grid-2 result-summary-grid">
+        <article className="card editorial-card">
+          <div className="panel-label">Interpretation</div>
+          <h2 className="section-title">Use the report to focus field action, not assign blame.</h2>
+          <p className="muted">
+            Model scores are intended for prioritization. They help rank inspections and highlight unusual
+            profiles, but they are not calibrated proof of wrongdoing.
+          </p>
+        </article>
+        <article className="card editorial-card accent-card">
+          <div className="panel-label">Topline</div>
+          <h2 className="section-title">Review flagged rows, reasons, and export-ready output in one pass.</h2>
+          <p className="muted">
+            The result payload is normalized by the server layer, so the front-end remains stable even when
+            the inference backend changes.
+          </p>
+        </article>
+      </section>
 
       <section className="card">
         <div className="table-wrap">
