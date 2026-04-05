@@ -103,6 +103,12 @@ Set these in `apps/web/.env.local` for local dev and in Vercel Project Settings 
 4. Add the environment variables listed above
 5. Deploy
 
+### Current deployed demo
+
+- Production URL: `https://web-51de25lec-pattarabordeelpt-1472s-projects.vercel.app`
+- Vercel project: `web`
+- Root directory: `apps/web`
+
 ### Minimum Vercel env setup for live inference
 
 ```bash
